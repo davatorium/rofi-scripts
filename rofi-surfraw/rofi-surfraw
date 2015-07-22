@@ -22,7 +22,7 @@ if [[ $elvi == "* "* ]]; then
         sr ${bang} ${searchmenu}
     elif [[ $method == "custom" ]]; then
         searchmenu=$(echo "" | rofi -dmenu -mesg "Using ${name}" -p "> ")
-        "$SURFRAW_graphical_browser" ${bang}${searchmenu}
+        "$SURFRAW_graphical_browser" ${bang}"${searchmenu}"
     fi
 else
     name=$(echo "${elvi}" | awk '{ print $1 }')
