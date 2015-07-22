@@ -43,4 +43,5 @@ then
 fi
 
 echo ".."
-ls
+# Print formatted listing
+ls --group-directories-first --color=never --indicator-style=slash
