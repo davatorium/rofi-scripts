@@ -1,11 +1,13 @@
+# Mode scripts
+
 Mode scripts are running by calling them as a mode:
 
-rofi -modi "name:<script>" -show name
+rofi -modi "name:script.sh" -show name
 
 
-# File Browser
+## File Browser
 
-## Usage
+### Usage
 
 ```bash
 rofi -modi "fb:./rofi-file-browser.sh" -show fb
