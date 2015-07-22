@@ -16,6 +16,6 @@ Rebuy - custom - https://www.rebuy.de/kaufen/suchen?q=
 
 There are 2 kind of searchengines: surfraw and custom.
 surfraw simply uses one of the elvi and adds parameters to it.
-The examples show to image searches using duckduckgo's [!banks](https://duckduckgo.com/bang).
+The examples show to image searches using duckduckgo's [!bangs](https://duckduckgo.com/bang).
 
 custom simply uses the actual query URL used by the searchengine and opens it directly in browser.
