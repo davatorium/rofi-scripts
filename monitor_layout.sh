@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source ~/.config/dmenurc
-
-
 XRANDR=$(which xrandr)
 
 MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
@@ -58,7 +55,7 @@ do
             TILES[$index]="Dual Screen ${MONITORS[$entry_a]} -> ${MONITORS[$entry_b]}"
             COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --auto \
                               --output ${MONITORS[$entry_b]} --auto --left-of ${MONITORS[$entry_a]}"
-            
+
             index+=1
         fi
     done
@@ -77,7 +74,7 @@ do
             TILES[$index]="Clone Screen ${MONITORS[$entry_a]} -> ${MONITORS[$entry_b]}"
             COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --auto \
                               --output ${MONITORS[$entry_b]} --auto --same-as ${MONITORS[$entry_a]}"
-            
+
             index+=1
         fi
     done
@@ -91,24 +88,12 @@ function gen_entries()
 {
     for a in $(seq 0 $(( ${#TILES[@]} -1 )))
     do
-        echo $a ${TILES[a]} 
+        echo $a ${TILES[a]}
     done
 }
 
-if [[ "$backend" == "simpleswitcher" ]]
-    then function dmenu_t () {
-             simpleswitcher -font "$font" -fg "$nf" -bg "$nb" -hlfg "$sf" -hlbg "$sb" -o 90 -bc "$bc" -dmenu
-         }
-
-elif [[ "$backend" == "dmenu" ]]
-    then function dmenu_t () {
-             dmenu -l 15 -fn "$font" -nf "$nf" -nb "$nb" -sf "$sf" -sb "$sb" -o 90
-         }
-fi
-
-
 # Call menu
-SEL=$( gen_entries | dmenu_t -p "Monitor:" | awk '{print $1}' )
+SEL=$( gen_entries | rofi -dmenu -p "Monitor:" | awk '{print $1}' )
 
 # Call xrandr
 $( ${COMMANDS[$SEL]} )
