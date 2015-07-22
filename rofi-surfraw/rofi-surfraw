@@ -1,16 +1,31 @@
 #!/bin/bash
 
+# source surfraw config
+source $HOME/.surfraw.conf
+
+# get list of search engines from surfraw
 list=$(sr -elvi | tail -n +2)
-custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print "* -",$1 }')
+
+# get custom engines from text file
+custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print "*",$1 }')
+
+# Draw Menu
 elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Entries begining with "*" are custom engines" -p "Select Search Provider > ")
-if [[ $elvi == "" ]]; then
-    exit
-elif [[ $elvi == "* "* ]]; then
-    selection=$(grep "$(echo "${elvi}" | awk -F ' - ' '{ print $2 }')" "$HOME/.config/rofi-surfraw/searchengines" | awk -F '-' '{ print $2 }')
-    help="$(echo "${elvi}" | awk -F ' - ' '{ print $2 }')"
+
+# Some logic
+if [[ $elvi == "* "* ]]; then
+    name=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $1 }')
+    method=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $2 }')
+    bang=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $3 }')
+    if [[ $method == "surfraw" ]]; then
+        searchmenu=$(echo "" | rofi -dmenu -mesg "Using ${name}" -p "> ")
+        sr ${bang} ${searchmenu}
+    elif [[ $method == "custom" ]]; then
+        searchmenu=$(echo "" | rofi -dmenu -mesg "Using ${name}" -p "> ")
+        "$SURFRAW_graphical_browser" ${bang}${searchmenu}
+    fi
 else
-    selection=$(echo "${elvi}" | awk '{ print $1 }')
-    help="$selection"
+    name=$(echo "${elvi}" | awk '{ print $1 }')
+    searchmenu=$(echo "" | rofi -dmenu -mesg "Using ${name}" -p "> ")
+    sr ${name} ${searchmenu}
 fi
-searchmenu=$(echo -e "" | rofi -dmenu -mesg "Using ${help}" -p "> ")
-sr ${selection} ${searchmenu}
