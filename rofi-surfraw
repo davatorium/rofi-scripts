@@ -1,0 +1,16 @@
+#!/bin/bash
+
+list=$(sr -elvi | tail -n +2)
+custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print "* -",$1 }')
+elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Entries begining with "*" are custom engines" -p "Select Search Provider > ")
+if [[ $elvi == "" ]]; then
+    exit
+elif [[ $elvi == "* "* ]]; then
+    selection=$(grep "$(echo "${elvi}" | awk -F ' - ' '{ print $2 }')" "$HOME/.config/rofi-surfraw/searchengines" | awk -F '-' '{ print $2 }')
+    help="$(echo "${elvi}" | awk -F ' - ' '{ print $2 }')"
+else
+    selection=$(echo "${elvi}" | awk '{ print $1 }')
+    help="$selection"
+fi
+searchmenu=$(echo -e "" | rofi -dmenu -mesg "Using ${help}" -p "> ")
+sr ${selection} ${searchmenu}
