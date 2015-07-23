@@ -9,8 +9,8 @@ For this `$HOME/.config/rofi-surfraw/searchengines` is parsed, which looks
 like this:
 
 ```
-Google Images - surfraw - !gi - duckduckgo
-Bing Images - surfraw - !bi - duckduckgo
+Google Images - surfraw - !gi - duckduckgo !gi
+Bing Images - surfraw - !bi - duckduckgo !bi
 Rebuy - custom - !rb - https://www.rebuy.de/kaufen/suchen?q=
 ```
 
