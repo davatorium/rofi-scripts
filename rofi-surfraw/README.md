@@ -9,9 +9,9 @@ For this `$HOME/.config/rofi-surfraw/searchengines` is parsed, which looks
 like this:
 
 ```
-Google Images - surfraw - duckduckgo !gi
-Bing Images - surfraw - duckduckgo !bi
-Rebuy - custom - https://www.rebuy.de/kaufen/suchen?q=
+Google Images - surfraw - !gi - duckduckgo
+Bing Images - surfraw - !bi - duckduckgo
+Rebuy - custom - !rb - https://www.rebuy.de/kaufen/suchen?q=
 ```
 
 There are 2 kind of searchengines: surfraw and custom.
@@ -19,3 +19,8 @@ surfraw simply uses one of the elvi and adds parameters to it.
 The examples show two image searches using duckduckgo's [!bangs](https://duckduckgo.com/bang).
 
 custom simply uses the actual query URL used by the searchengine and opens it directly in browser.
+
+Each custom search engine has a bang defined. (Starting with !).
+These can be used to instantly search. (Just type "!gi foobar")
+
+with `--no-list` the inbuild elvis will not be shown and only custom engines will be displayed.
