@@ -4,7 +4,11 @@
 source $HOME/.surfraw.conf
 
 # get list of search engines from surfraw
-list=$(sr -elvi | tail -n +2)
+if [[ $1 == "--no-list" ]]; then
+    :
+else
+    list=$(sr -elvi | tail -n +2)
+fi
 
 # get custom engines from text file
 custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print "*",$1 }')
