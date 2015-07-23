@@ -37,7 +37,7 @@ elif [[ $elvi == "!"* ]]; then
     bang=$(grep "$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $3 }')
     search=$(echo "${elvi}" | awk '{ print $2 }')
     if [[ $method == "surfraw" ]]; then
-        sr ${bang} ${search}
+        sr ${bang} "${search}"
     elif [[ $method == "custom" ]]; then
         "$SURFRAW_graphical_browser" ${bang}"${search}"
     fi
