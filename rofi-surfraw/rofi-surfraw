@@ -19,7 +19,7 @@ fi
 
 main () {
 # Draw Menu
-elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Entries begining with "!" are custom bangs" -p "Select Search Provider > ")
+elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Hit Ctrl+Space to use selected Engine" -p "Select Search Provider > ")
 
 # Some logic
 if [[ $elvi == "" ]]; then exit
