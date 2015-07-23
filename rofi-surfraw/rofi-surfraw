@@ -64,7 +64,7 @@ if [[ $1 == "--help" ]]; then
     echo "rofi-surfraw - (C) 2015 Rasmus Steinke <rasi at xssn dot at>"
     echo "---"
     echo "--help         this help"
-    echo "--no-list      do not show unbuild search engines"
+    echo "--no-list      do not show inbuild search engines"
     echo "--no-custom    do not show custom search engines"
 else
     main
