@@ -23,4 +23,6 @@ custom simply uses the actual query URL used by the searchengine and opens it di
 Each custom search engine has a bang defined. (Starting with !).
 These can be used to instantly search. (Just type "!gi foobar")
 
-with `--no-list` the inbuild elvis will not be shown and only custom engines will be displayed.
+#### Options
+`--no-list`   - do not show surfraw's inbuild search engines
+`--no-custom` - do not show custom search engines
