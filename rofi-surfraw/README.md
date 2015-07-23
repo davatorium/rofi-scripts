@@ -24,5 +24,5 @@ Each custom search engine has a bang defined. (Starting with !).
 These can be used to instantly search. (Just type "!gi foobar")
 
 #### Options
-`--no-list`   - do not show surfraw's inbuild search engines
+`--no-list`   - do not show surfraw's inbuild search engines<br />
 `--no-custom` - do not show custom search engines
