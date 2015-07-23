@@ -11,7 +11,7 @@ else
 fi
 
 # get custom engines from text file
-custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print "*",$1 }')
+custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print $3,$1 }' | cut -c 2-)
 
 # Draw Menu
 elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Entries begining with "*" are custom engines" -p "Select Search Provider > ")
@@ -21,7 +21,7 @@ if [[ $elvi == "" ]]; then exit
 elif [[ $elvi == "* "* ]]; then
     name=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $1 }')
     method=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $2 }')
-    bang=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $3 }')
+    bang=$(grep "$(echo "${elvi}" | cut -c 3-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $4 }')
     if [[ $method == "surfraw" ]]; then
         searchmenu=$(echo "" | rofi -dmenu -mesg "Using ${name}" -p "> ")
         if [[ $searchmenu == "" ]]; then
@@ -36,12 +36,12 @@ elif [[ $elvi == "* "* ]]; then
         "$SURFRAW_graphical_browser" ${bang}"${searchmenu}"
     fi
 elif [[ $elvi == "!"* ]]; then
-    name=$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)
-    method=$(grep "$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)" "$HOME/.config/rofi-surfraw/bangs" | awk -F ' - ' '{ print $2 }')
-    bang=$(grep "$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)" "$HOME/.config/rofi-surfraw/bangs" | awk -F ' - ' '{ print $3 }')
-    search=$(echo "${elvi}" | awk '{$1=""; print $0}')
+    entry=$(grep "$(echo "${elvi}" | awk '{ print $1 }')" "$HOME/.config/rofi-surfraw/searchengines")
+    method=$(echo "${entry}" | awk -F ' - ' '{ print $2 }')
+    bang=$(echo "${entry}" | awk -F ' - ' '{ print $4 }')
+    search=$(echo "${elvi}" | awk '{$1=""; print $0}' | cut -c 2-)
     if [[ $method == "surfraw" ]]; then
-        sr ${bang} "${search}"
+        sr ${bang} ${search}
     elif [[ $method == "custom" ]]; then
         "$SURFRAW_graphical_browser" ${bang}"${search}"
     fi
