@@ -12,4 +12,6 @@ rofi -modi "name:script.sh" -show name
 ```bash
 rofi -modi "fb:./rofi-file-browser.sh" -show fb
 ```
+### Screenshot
 
+![Rofi File Browser](rofi-file-browser.png)
