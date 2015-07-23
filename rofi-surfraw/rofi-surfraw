@@ -4,15 +4,20 @@
 source $HOME/.surfraw.conf
 
 # get list of search engines from surfraw
-if [[ $1 == "--no-list" ]]; then
+if [[ $@ == *"--no-list"* ]]; then
     :
 else
     list=$(sr -elvi | tail -n +2)
 fi
 
 # get custom engines from text file
-custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print $3,$1 }' | cut -c 2-)
+if [[ $@ == *"--no-custom"* ]]; then
+    :
+else
+    custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F '-' '{ print $3,$1 }' | cut -c 2-)
+fi
 
+main () {
 # Draw Menu
 elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Entries begining with "*" are custom engines" -p "Select Search Provider > ")
 
@@ -52,4 +57,15 @@ else
         exit
     fi
     sr ${name} ${searchmenu}
+fi
+}
+
+if [[ $1 == "--help" ]]; then
+    echo "rofi-surfraw - (C) 2015 Rasmus Steinke <rasi at xssn dot at>"
+    echo "---"
+    echo "--help         this help"
+    echo "--no-list      do not show unbuild search engines"
+    echo "--no-custom    do not show custom search engines"
+else
+    main
 fi
