@@ -33,7 +33,7 @@ elif [[ $elvi == "* "* ]]; then
     fi
 elif [[ $elvi == "!"* ]]; then
     name=$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)
-    method=$(grep "$(echo "${elvi}")" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $2 }')
+    method=$(grep "$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $2 }')
     bang=$(grep "$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)" "$HOME/.config/rofi-surfraw/searchengines" | awk -F ' - ' '{ print $3 }')
     search=$(echo "${elvi}" | awk '{ print $2 }')
     if [[ $method == "surfraw" ]]; then
