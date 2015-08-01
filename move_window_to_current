@@ -21,8 +21,12 @@ function gen_entries()
     done
 }
 
-selection=$( gen_entries | rofi -dmenu -p "Window: " -format i -no-custom )
-[ "$selection" = "" ] && exit
+selections=$( gen_entries | rofi -dmenu -p "Window: " -format i )
+[ "$selections" = "" ] && exit
 
-window_id=$(printf "%d" "${IDS[selection]}")
-i3-msg "[ id = $window_id ] move workspace current, focus"
+while read -r selection; do
+    if [ "$selection" != -1 ]; then
+        window_id=$(printf "%d" "${IDS[selection]}")
+        i3-msg "[ id = $window_id ] move workspace current, focus" > /dev/null
+    fi
+done <<< "$selections"
