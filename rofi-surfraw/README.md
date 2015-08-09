@@ -16,10 +16,10 @@ like this:
 ```
 
 There are 2 kind of searchengines: surfraw and custom.
-* surfraw
-  simply uses one of the elvi and adds parameters to it.
+* surfraw  
+  simply uses one of the elvi and adds parameters to it.  
   The examples shows an image search using duckduckgo's [!bangs](https://duckduckgo.com/bang).
-* custom
+* custom  
   simply uses the actual query URL used by the searchengine and opens it directly in browser.
 
 Each custom search engine has a bang defined. (Starting with !).
