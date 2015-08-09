@@ -1,8 +1,10 @@
 # rofi-surfraw
 #### a little frontend for surfraw, utilizing rofi
 
-this script shows a list of all "elvis" and let's the user choose one.
-It then asks for a search term and opens a browser with the results.
+this script shows a list of all "elvis". The list can be filtered and
+elvis completed with Ctrl+Space. Everything typed after an elvis
+is considered a searchterm and a browser will open with the appropriate seach results.
+If you don't know what surfraw is or what elvis means, have a look on the [surfraw homepage](https://surfraw.alioth.debian.org/)
 
 In addition to elvis it's possible to add your own.
 For this `$HOME/.config/rofi-surfraw/searchengines` is parsed, which looks
