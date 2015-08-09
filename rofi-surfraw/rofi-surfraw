@@ -22,7 +22,9 @@ fi
 
 main () {
 # Draw Menu
-elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Hit Ctrl+Space to complete selected Engine" -p "Select Search Provider > ")
+HELP_MSG="<span color=\"$help_color\">Hit Ctrl+Space to complete Engine Name
+Searches without prepended engine use "${default}"</span>"
+elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "${HELP_MSG}" -p "Search > ")
 
 # Some logic
 if [[ $elvi == "" ]]; then exit
