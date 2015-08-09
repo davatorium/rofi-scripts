@@ -16,13 +16,17 @@ like this:
 ```
 
 There are 2 kind of searchengines: surfraw and custom.
-surfraw simply uses one of the elvi and adds parameters to it.
-The examples shows an image search using duckduckgo's [!bangs](https://duckduckgo.com/bang).
-
-custom simply uses the actual query URL used by the searchengine and opens it directly in browser.
+* surfraw
+  simply uses one of the elvi and adds parameters to it.
+  The examples shows an image search using duckduckgo's [!bangs](https://duckduckgo.com/bang).
+* custom
+  simply uses the actual query URL used by the searchengine and opens it directly in browser.
 
 Each custom search engine has a bang defined. (Starting with !).
 These can be used to instantly search. (Just type "!gi foobar")
+
+If no bang (words starting with ? or !) starts the line, the default engine will be used.
+This can be configured in the config file.
 
 #### Options
 `--no-list`   - do not show surfraw's inbuild search engines<br />
