@@ -17,8 +17,7 @@ like this:
 
 There are 2 kind of searchengines: surfraw and custom.
 * surfraw  
-  simply uses one of the elvi and adds parameters to it.  
-  The examples shows an image search using duckduckgo's [!bangs](https://duckduckgo.com/bang).
+  simply uses one of the elvi and adds parameters to it. The examples shows an image search using duckduckgo's [!bangs](https://duckduckgo.com/bang).
 * custom  
   simply uses the actual query URL used by the searchengine and opens it directly in browser.
 
