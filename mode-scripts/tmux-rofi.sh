@@ -1,5 +1,10 @@
 #!/bin/bash -x
 
+# set these options in your tmux config:
+# set -g set-titles on
+# set -g set-titles-string "tmux - #T"
+
+
 if [[ -z $@ ]]
 then
 showList () {
