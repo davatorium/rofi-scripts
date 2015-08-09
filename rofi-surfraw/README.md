@@ -9,9 +9,8 @@ For this `$HOME/.config/rofi-surfraw/searchengines` is parsed, which looks
 like this:
 
 ```
-Google Images - surfraw - !gi - duckduckgo !gi
-Bing Images - surfraw - !bi - duckduckgo !bi
-Rebuy - custom - !rb - https://www.rebuy.de/kaufen/suchen?q=
+!gi - surfraw - duckduckgo !gi
+!sp - custom - http://www.sputnikmusic.com/search_results.php?genreid=0&search_in=Bands&search_text=
 ```
 
 There are 2 kind of searchengines: surfraw and custom.
