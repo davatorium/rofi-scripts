@@ -3,21 +3,36 @@
 # source surfraw config
 source $HOME/.surfraw.conf
 
-# get default searchengine
-source $HOME/.config/rofi-surfraw/config
+# load global files
+source /etc/rofi-surfraw.conf
+
+# create local copy of custom searchengines
+if [[ ! -d $HOME/.config/rofi-surfraw ]]; then
+    mkdir $HOME/.config/rofi-surfraw/searchengines 
+fi
+if [[ ! -f $HOME/.config/rofi-surfraw/searchengines ]]; then
+    cp /usr/share/doc/rofi-surfraw/searchengines $HOME/.config/rofi-surfraw/searchengines
+fi
+
+# get local config
+if [[ ! -f $HOME/.config/rofi-surfraw/config ]]; then
+    source $HOME/.config/rofi-surfraw/config
+fi
 
 # get list of search engines from surfraw
 if [[ $@ == *"--no-list"* ]]; then
     :
 else
-    list=$(sr -elvi | awk '{ print "?"$1 }' | tail -n +2)
+#    list=$(sr -elvi | awk '{ print "?"$1 }' | tail -n +2)
+    list=$(sr -elvi | awk '{if (NR!=1) print "?"$1 }')
 fi
 
 # get custom engines from text file
 if [[ $@ == *"--no-custom"* ]]; then
     :
 else
-    custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F ' - ' '{ print $1 }')
+#    custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F ' - ' '{ print $1 }')
+    custom=$(awk -F ' - ' '{ print $1 }' $HOME/.config/rofi-surfraw/searchengines)
 fi
 
 main () {
