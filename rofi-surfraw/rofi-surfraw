@@ -3,11 +3,14 @@
 # source surfraw config
 source $HOME/.surfraw.conf
 
+# get default searchengine
+source $HOME/.config/rofi-surfraw/config
+
 # get list of search engines from surfraw
 if [[ $@ == *"--no-list"* ]]; then
     :
 else
-    list=$(sr -elvi | awk '{ print $1 }' | tail -n +2)
+    list=$(sr -elvi | awk '{ print "?"$1 }' | tail -n +2)
 fi
 
 # get custom engines from text file
@@ -19,7 +22,7 @@ fi
 
 main () {
 # Draw Menu
-elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Hit Ctrl+Space to use selected Engine" -p "Select Search Provider > ")
+elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "Hit Ctrl+Space to complete selected Engine" -p "Select Search Provider > ")
 
 # Some logic
 if [[ $elvi == "" ]]; then exit
@@ -33,9 +36,13 @@ elif [[ $elvi == "!"* ]]; then
     elif [[ $method == "custom" ]]; then
         "$SURFRAW_graphical_browser" ${bang}"${search}"
     fi
-else
-    name=$(echo "${elvi}" | awk '{ print $1 }')
+elif [[ $elvi == "?"* ]]; then
+    name=$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)
     search=$(echo "${elvi}" | awk '{$1=""; print $0}' | cut -c 2-)
+    sr ${name} ${search}
+else
+    name="${default}"
+    search="${elvi}"
     sr ${name} ${search}
 fi
 }
