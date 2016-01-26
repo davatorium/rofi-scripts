@@ -18,6 +18,6 @@ https://github.com/okraits/i3-color-rofi
 #### A bibtex powered browser for your PDF document collection
 https://github.com/t-wissmann/rofi-bibbrowser
 
-## https://github.com/octotep/menugen
+## menugen
 #### Generates menu based applications using rofi
 https://github.com/octotep/menugen
