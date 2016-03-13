@@ -21,3 +21,7 @@ https://github.com/t-wissmann/rofi-bibbrowser
 ## menugen
 #### Generates menu based applications using rofi
 https://github.com/octotep/menugen
+
+## dofi
+#### A little frontend for todo.sh
+https://github.com/carnager/dofi
