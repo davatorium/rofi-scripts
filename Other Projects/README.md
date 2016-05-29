@@ -23,5 +23,5 @@ https://github.com/t-wissmann/rofi-bibbrowser
 https://github.com/octotep/menugen
 
 ## dofi
-#### A little frontend for todo.sh
+#### rofi powered todo manager
 https://github.com/carnager/dofi
