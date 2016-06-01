@@ -25,3 +25,7 @@ https://github.com/octotep/menugen
 ## dofi
 #### rofi powered todo manager
 https://github.com/carnager/dofi
+
+## rofi-power
+#### Little menu to manage power options
+http://okraits.de/files/dotfiles/bin/rofi-power
