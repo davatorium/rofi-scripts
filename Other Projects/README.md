@@ -29,3 +29,7 @@ https://github.com/carnager/dofi
 ## rofi-power
 #### Little menu to manage power options
 http://okraits.de/files/dotfiles/bin/rofi-power
+
+## buku_run
+#### rofi frontend for buku bookmarks manager
+https://github.com/carnager/buku_run
