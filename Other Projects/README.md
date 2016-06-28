@@ -12,7 +12,7 @@ https://github.com/lukequaint/rofi_notes
 
 ## i3-color-rofi
 #### Fetches the current i3 wm colors and provides an options string to color rofi
-https://github.com/okraits/i3-color-rofi
+https://github.com/okraits/rofi-tools
 
 ## rofi-bibbrowser
 #### A bibtex powered browser for your PDF document collection
@@ -28,7 +28,7 @@ https://github.com/carnager/dofi
 
 ## rofi-power
 #### Little menu to manage power options
-http://okraits.de/files/dotfiles/bin/rofi-power
+https://github.com/okraits/rofi-tools
 
 ## buku_run
 #### rofi frontend for buku bookmarks manager
