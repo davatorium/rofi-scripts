@@ -22,3 +22,8 @@
 ### Screenshot
 
 ![Monitor Layout](monitor_layout.png)
+
+## rofi_gtk_colors.py
+
+Tries to generate colors from current Gtk+-3.0 theme.
+Based on code in Mate-HUD.
