@@ -15,7 +15,7 @@ if [[ ! -f $HOME/.config/rofi-surfraw/searchengines ]]; then
 fi
 
 # get local config
-if [[ ! -f $HOME/.config/rofi-surfraw/config ]]; then
+if [[ -f $HOME/.config/rofi-surfraw/config ]]; then
     source $HOME/.config/rofi-surfraw/config
 fi
 
@@ -51,16 +51,27 @@ elif [[ $elvi == "!"* ]]; then
     if [[ $method == "surfraw" ]]; then
         sr ${bang} ${search}
     elif [[ $method == "custom" ]]; then
-        "$SURFRAW_graphical_browser" ${bang}"${search}"
+        "$SURFRAW_graphical_browser" $SURFRAW_graphical_browser_args ${bang}"${search}"
     fi
 elif [[ $elvi == "?"* ]]; then
     name=$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)
     search=$(echo "${elvi}" | awk '{$1=""; print $0}' | cut -c 2-)
     sr ${name} ${search}
 else
-    name="${default}"
+    if [[ $default == "!"* ]]; then
+        entry=$(grep "$(echo "${default}" | awk '{ print $1 }')" "$HOME/.config/rofi-surfraw/searchengines")
+        method=$(echo "${entry}" | awk -F ' - ' '{ print $2 }')
+        bang=$(echo "${entry}" | awk -F ' - ' '{ print $3 }')
+    else
+        method="surfraw"
+        bang="$default"
+    fi
     search="${elvi}"
-    sr ${name} ${search}
+    if [[ $method == "surfraw" ]]; then
+        sr ${bang} ${search}
+    elif [[ $method == "custom" ]]; then
+        "$SURFRAW_graphical_browser" $SURFRAW_graphical_browser_args ${bang}"${search}"
+    fi
 fi
 }
 
