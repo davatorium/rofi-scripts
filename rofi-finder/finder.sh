@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #PUT THIS FILE IN ~/.local/share/rofi/finder.sh
 #USE: rofi  -show find -modi find:~/.local/share/rofi/finder.sh
 if [ ! -z "$@" ]
