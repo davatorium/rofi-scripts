@@ -12,16 +12,16 @@
 
 ![I3 Workspace Switcher](i3_switch_workspace.png)
 
-## monitor_layout.sh
+## rofi-xrandr.sh
 
 ### Usage
 
 ```bash
-./monitor_layout.sh
+./rofi-xrandr.sh
 ```
 ### Screenshot
 
-![Monitor Layout](monitor_layout.png)
+![Monitor Layout](rofi-xrandr.png)
 
 ## rofi_gtk_colors.py
 
