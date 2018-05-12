@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Allows to manage screens with rofi using implicitly xrandr.
 
 XRANDR=$(which xrandr)
 
