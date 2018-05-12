@@ -2,99 +2,75 @@
 #
 # Allows to manage screens with rofi using implicitly xrandr.
 
-XRANDR=$(which xrandr)
-
-MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
-
-
+MONITORS=($($(which xrandr) | awk '($2 == "connected"){print $1}'))
 NUM_MONITORS=${#MONITORS[@]}
 
+declare -i index=0
+TILES[$index]="Cancel"
+index+=1
 
+# Turn off monitors except a specified one.
+function disable_monitors_except() {
+    cmd="xrandr --output ${MONITORS[$1]} --auto"
 
-
-function gen_xrandr_only()
-{
-    selected=$1
-
-    cmd="xrandr --output ${MONITORS[$selected]} --auto "
-
-    for entry in $(seq 0 $((${NUM_MONITORS}-1)))
+    for i in $(seq 0 $((${NUM_MONITORS} - 1)))
     do
-        if [ $selected != $entry ]
-        then
-            cmd="$cmd --output ${MONITORS[$entry]} --off"
-        fi
+	if [ $1 != $i ]; then
+	    echo "$cmd --output ${MONITORS[$i]} --off"
+	    return
+	fi
     done
 
     echo $cmd
 }
 
-
-
-declare -i index=0
-TILES[$index]="Cancel"
-COMMANDS[$index]="true"
-index+=1
-
-
-for entry in $(seq 0 $((${NUM_MONITORS}-1)))
-do
-    TILES[$index]="Only ${MONITORS[$entry]}"
-    COMMANDS[$index]=$(gen_xrandr_only $entry)
-    index+=1
-done
-
-##
-# Dual screen options
-##
-for entry_a in $(seq 0 $((${NUM_MONITORS}-1)))
-do
-    for entry_b in $(seq 0 $((${NUM_MONITORS}-1)))
+# Generate entries.
+function gen_entries() {
+    for i in $(seq 0 $((${#TILES[@]} - 1)))
     do
-        if [ $entry_a != $entry_b ]
-        then
-            TILES[$index]="Dual Screen ${MONITORS[$entry_a]} -> ${MONITORS[$entry_b]}"
-            COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --auto \
-                              --output ${MONITORS[$entry_b]} --auto --right-of ${MONITORS[$entry_a]}"
-
-            index+=1
-        fi
-    done
-done
-
-
-##
-# Clone monitors
-##
-for entry_a in $(seq 0 $((${NUM_MONITORS}-1)))
-do
-    for entry_b in $(seq 0 $((${NUM_MONITORS}-1)))
-    do
-        if [ $entry_a != $entry_b ]
-        then
-            TILES[$index]="Clone Screen ${MONITORS[$entry_a]} -> ${MONITORS[$entry_b]}"
-            COMMANDS[$index]="xrandr --output ${MONITORS[$entry_a]} --auto \
-                              --output ${MONITORS[$entry_b]} --auto --same-as ${MONITORS[$entry_a]}"
-
-            index+=1
-        fi
-    done
-done
-
-
-##
-#  Generate entries, where first is key.
-##
-function gen_entries()
-{
-    for a in $(seq 0 $(( ${#TILES[@]} -1 )))
-    do
-        echo "$a: ${TILES[a]}"
+	echo "$i: ${TILES[i]}"
     done
 }
 
+# Generate monitor options according to a valid mode.
+# Available modes are: "only", "clone" and "dual".
+function gen_options() {
+    if [ "$1" == "only" ]; then
+	for i in $(seq 0 $((${NUM_MONITORS} - 1)))
+	do
+	    TILES[$index]="Only ${MONITORS[$i]}"
+	    COMMANDS[$index]=$(disable_monitors_except $i)
+	    index+=1
+	done
+    else
+	for i in $(seq 0 $((${NUM_MONITORS} - 1)))
+	do
+	    for j in $(seq 0 $((${NUM_MONITORS} - 1)))
+	    do
+		if [ $i != $j ]; then
+		    if [ "$1" == "clone" ]; then
+			TILES[$index]="Clone Screen ${MONITORS[$i]} -> ${MONITORS[$j]}"
+			COMMANDS[$index]="xrandr --output ${MONITORS[$i]} --auto \
+                              --output ${MONITORS[$j]} --auto --same-as ${MONITORS[$i]}"
+		    elif [ "$1" == "dual" ]; then
+			TILES[$index]="Dual Screen ${MONITORS[$i]} -> ${MONITORS[$j]}"
+			COMMANDS[$index]="xrandr --output ${MONITORS[$i]} --auto \
+                              --output ${MONITORS[$j]} --auto \
+			       --right-of ${MONITORS[$i]}"
+		    fi
+		    index+=1
+		fi
+	    done
+	done
+    fi
+}
+
+gen_options 'only'
+gen_options 'dual'
+gen_options 'clone'
+
 # Call menu
-SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup:" -no-custom  | awk '{print $1}' )
+SEL=$(gen_entries | rofi -dmenu -p "Monitor Setup" -no-custom  | awk '{print $1}')
 
 # Call xrandr
-$( ${COMMANDS[${SEL::-1}]} )
+$(${COMMANDS[${SEL::-1}]})
