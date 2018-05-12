@@ -9,8 +9,7 @@ MONITORS=( $( ${XRANDR} | awk '( $2 == "connected" ){ print $1 }' ) )
 
 NUM_MONITORS=${#MONITORS[@]}
 
-TITLES=()
-COMMANDS=()
+
 
 
 function gen_xrandr_only()
