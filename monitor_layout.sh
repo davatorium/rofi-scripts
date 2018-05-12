@@ -89,7 +89,7 @@ function gen_entries()
 {
     for a in $(seq 0 $(( ${#TILES[@]} -1 )))
     do
-        echo $a ${TILES[a]}
+        echo "$a: ${TILES[a]}"
     done
 }
 
@@ -97,4 +97,4 @@ function gen_entries()
 SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup:" -a 0 -no-custom  | awk '{print $1}' )
 
 # Call xrandr
-$( ${COMMANDS[$SEL]} )
+$( ${COMMANDS[${SEL::-1}]} )
