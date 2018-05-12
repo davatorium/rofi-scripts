@@ -49,11 +49,11 @@ function gen_options() {
 	    do
 		if [ $i != $j ]; then
 		    if [ "$1" == "clone" ]; then
-			TILES[$index]="Clone Screen ${MONITORS[$i]} -> ${MONITORS[$j]}"
+			TILES[$index]="Clone Screen ${MONITORS[$i]}  ${MONITORS[$j]}"
 			COMMANDS[$index]="xrandr --output ${MONITORS[$i]} --auto \
                               --output ${MONITORS[$j]} --auto --same-as ${MONITORS[$i]}"
 		    elif [ "$1" == "dual" ]; then
-			TILES[$index]="Dual Screen ${MONITORS[$i]} -> ${MONITORS[$j]}"
+			TILES[$index]="Dual Screen ${MONITORS[$i]}  ${MONITORS[$j]}"
 			COMMANDS[$index]="xrandr --output ${MONITORS[$i]} --auto \
                               --output ${MONITORS[$j]} --auto \
 			       --right-of ${MONITORS[$i]}"
