@@ -2,6 +2,10 @@
 #### password manager using password-store and rofi
 https://github.com/carnager/rofi-pass
 
+## rofi-gopass
+#### password manager using gopass and rofi
+https://github.com/Algram/rofi-gopass
+
 ## autopass
 #### another rofi frontend for password-store
 https://github.com/jreinert/autopass
