@@ -20,8 +20,8 @@ then
   elif [[ "$@" == \!\!* ]]
   then
     echo "!!-- Type your search query to find files"
-    echo "!!-- To seach again type !<search_query>"
-    echo "!!-- To seach parent directories type ?<search_query>"
+    echo "!!-- To search again type !<search_query>"
+    echo "!!-- To search parent directories type ?<search_query>"
     echo "!!-- You can print this help by typing !!"
   elif [[ "$@" == \?* ]]
   then
