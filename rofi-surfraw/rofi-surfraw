@@ -3,10 +3,10 @@
 command -v sr >/dev/null 2>&1 && command -v rofi >/dev/null 2>&1 || exit 1
 
 # get local config
-file="${XDG_CONFIG_HOME:-$HOME/.config}"/rofi-surfraw/config
+file="${XDG_CONFIG_HOME:-$HOME/.config}"/surfraw/conf
 [ -f "$file" ] && [ -r "$file" ] &&
     . "$file"
-default="${default:-duckduckgo}"
+default="${SURFRAW_customsearch_provider:-duckduckgo}"
 # get list of search engines from surfraw
 if [[ $* != *"--no-list"* ]]; then
     list="$(sr -elvi | awk '{if (NR!=1) print $1 }')"
@@ -27,9 +27,10 @@ unset file
 
 main () {
 # Draw Menu
+# help_color="#0C73C2"
 # HELP_MSG="<span color=\"$help_color\">Hit Ctrl+Space to complete Engine Name
 # Searches without prepended engine use "${default}"</span>"
-# rofi -mesg "${HELP_MSG}"
+# elvi=$(echo -e "$list" | rofi -dmenu -p "Search > " -mesg "${HELP_MSG}")
 elvi=$(echo -e "$list" | rofi -dmenu -p "Search > ")
 
 # Some logic
