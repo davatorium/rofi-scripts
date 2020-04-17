@@ -1,86 +1,56 @@
 #!/bin/bash
 
-# source surfraw config
-source $HOME/.surfraw.conf
-
-# load global files
-source /etc/rofi-surfraw.conf
-
-# create local copy of custom searchengines
-if [[ ! -d $HOME/.config/rofi-surfraw ]]; then
-    mkdir $HOME/.config/rofi-surfraw/searchengines 
-fi
-if [[ ! -f $HOME/.config/rofi-surfraw/searchengines ]]; then
-    cp /usr/share/doc/rofi-surfraw/searchengines $HOME/.config/rofi-surfraw/searchengines
-fi
+command -v sr >/dev/null 2>&1 && command -v rofi >/dev/null 2>&1 || exit 1
 
 # get local config
-if [[ -f $HOME/.config/rofi-surfraw/config ]]; then
-    source $HOME/.config/rofi-surfraw/config
-fi
-
+file="${XDG_CONFIG_HOME:-$HOME/.config}"/rofi-surfraw/config
+[ -f "$file" ] && [ -r "$file" ] &&
+    . "$file"
+default="${default:-duckduckgo}"
 # get list of search engines from surfraw
-if [[ $@ == *"--no-list"* ]]; then
-    :
-else
-#    list=$(sr -elvi | awk '{ print "?"$1 }' | tail -n +2)
-    list=$(sr -elvi | awk '{if (NR!=1) print "?"$1 }')
+if [[ $* != *"--no-list"* ]]; then
+    list="$(sr -elvi | awk '{if (NR!=1) print $1 }')"
+    # for l in $list; do
+    #     sr "$l" -local-help
+    # done
 fi
-
-# get custom engines from text file
-if [[ $@ == *"--no-custom"* ]]; then
-    :
-else
-#    custom=$(cat $HOME/.config/rofi-surfraw/searchengines | awk -F ' - ' '{ print $1 }')
-    custom=$(awk -F ' - ' '{ print $1 }' $HOME/.config/rofi-surfraw/searchengines)
+# get list of bookmarks from surfraw
+if [[ $* != *"--no-bookmarks"* ]]; then
+    file="${XDG_CONFIG_DIRS:-/etc/xdg}"/surfraw/bookmarks
+    [ -f "$file" ] && [ -r "$file" ] &&
+        list=${list:+"${list}\n"}"$(awk '{ print $1 }' "$file")"
+    file="${XDG_CONFIG_HOME:-$HOME/.config}"/surfraw/bookmarks
+    [ -f "$file" ] && [ -r "$file" ] &&
+        list=${list:+"${list}\n"}"$(awk '{ print $1 }' "$file")"
 fi
+unset file
 
 main () {
 # Draw Menu
-HELP_MSG="<span color=\"$help_color\">Hit Ctrl+Space to complete Engine Name
-Searches without prepended engine use "${default}"</span>"
-elvi=$(echo -e "${list}\n${custom}" | rofi -dmenu -mesg "${HELP_MSG}" -p "Search > ")
+# HELP_MSG="<span color=\"$help_color\">Hit Ctrl+Space to complete Engine Name
+# Searches without prepended engine use "${default}"</span>"
+# rofi -mesg "${HELP_MSG}"
+elvi=$(echo -e "$list" | rofi -dmenu -p "Search > ")
 
 # Some logic
-if [[ $elvi == "" ]]; then exit
-elif [[ $elvi == "!"* ]]; then
-    entry=$(grep "$(echo "${elvi}" | awk '{ print $1 }')" "$HOME/.config/rofi-surfraw/searchengines")
-    method=$(echo "${entry}" | awk -F ' - ' '{ print $2 }')
-    bang=$(echo "${entry}" | awk -F ' - ' '{ print $3 }')
-    search=$(echo "${elvi}" | awk '{$1=""; print $0}' | cut -c 2-)
-    if [[ $method == "surfraw" ]]; then
-        sr ${bang} ${search}
-    elif [[ $method == "custom" ]]; then
-        "$SURFRAW_graphical_browser" $SURFRAW_graphical_browser_args ${bang}"${search}"
-    fi
-elif [[ $elvi == "?"* ]]; then
-    name=$(echo "${elvi}" | awk '{ print $1 }' | cut -c 2-)
-    search=$(echo "${elvi}" | awk '{$1=""; print $0}' | cut -c 2-)
-    sr ${name} ${search}
+if [ -z "$elvi" ]; then exit 0
 else
-    if [[ $default == "!"* ]]; then
-        entry=$(grep "$(echo "${default}" | awk '{ print $1 }')" "$HOME/.config/rofi-surfraw/searchengines")
-        method=$(echo "${entry}" | awk -F ' - ' '{ print $2 }')
-        bang=$(echo "${entry}" | awk -F ' - ' '{ print $3 }')
-    else
-        method="surfraw"
-        bang="$default"
+    engine=$(echo "$elvi" | awk '{ print $1 }')
+    query=$(echo "$elvi" | awk '{$1=""; print $0}')
+    if ! echo -e "$list" | grep -Fw "$engine"; then
+        engine="$default"
+        query="$elvi"
     fi
-    search="${elvi}"
-    if [[ $method == "surfraw" ]]; then
-        sr ${bang} ${search}
-    elif [[ $method == "custom" ]]; then
-        "$SURFRAW_graphical_browser" $SURFRAW_graphical_browser_args ${bang}"${search}"
-    fi
+    sr "$engine" $query
 fi
 }
 
-if [[ $1 == "--help" ]]; then
+if [ "$1" == "--help" ]; then
     echo "rofi-surfraw - (C) 2015 Rasmus Steinke <rasi at xssn dot at>"
     echo "---"
     echo "--help         this help"
-    echo "--no-list      do not show inbuild search engines"
-    echo "--no-custom    do not show custom search engines"
+    echo "--no-list      do not show inbuilt search engines"
+    echo "--no-bookmarks do not show bookmarked search engines"
 else
     main
 fi
