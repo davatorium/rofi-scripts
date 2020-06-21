@@ -37,3 +37,7 @@ https://github.com/okraits/rofi-tools
 ## buku_run
 #### rofi frontend for buku bookmarks manager
 https://github.com/carnager/buku_run
+
+## Bolt
+### Lightning fast file/folder launcher for the faster workflow ever
+https://github.com/salman-abedin/bolt
