@@ -33,6 +33,6 @@ If you want to find a folder containing a file you can type ```?<search_query>``
 
 ![Rofi Finder 4](rofi-finder-4.png)
 
-If you see ```??``` at the end of the result line you can press enter to open the file containing that file.
+If you see ```??``` at the end of the result line you can press enter to open the folder containing that file.
 
 ![Rofi Finder 5](rofi-finder-5.png)
