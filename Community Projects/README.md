@@ -41,3 +41,7 @@ https://github.com/carnager/buku_run
 ## Bolt
 ### Lightning fast file/folder launcher for the faster workflow ever
 https://github.com/salman-abedin/bolt
+
+## Short-rofi
+#### This script put out shortcuts about the active programm
+https://github.com/AndeAndreas31415/Short-Rofi
