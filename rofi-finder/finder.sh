@@ -25,11 +25,13 @@ then
     echo "!!-- You can print this help by typing !!"
   elif [[ "$@" == \?* ]]
   then
+    echo "!!-- Type another search query"
     while read -r line; do
       echo "$line" \?\?
-    done <<< $(find / -iname *"${QUERY#\?}"* 2>&1 | grep -v 'Permission denied\|Input/output error')
+    done <<< $(find ~ -type d -path '*/\.*' -prune -o -not -name '.*' -type f -iname *"${QUERY#\?}"* -print)
   else
-    find / -iname *"${QUERY#!}"* 2>&1 | grep -v 'Permission denied\|Input/output error'
+    echo "!!-- Type another search query"
+    find ~ -type d -path '*/\.*' -prune -o -not -name '.*' -type f -iname *"${QUERY#!}"* -print
   fi
 else
   echo "!!-- Type your search query to find files"
