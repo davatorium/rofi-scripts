@@ -9,10 +9,10 @@ TMUX_SESSION=$( (tmux_sessions; echo 'New') | rofi -dmenu -p 'Select existing tm
 if [[ x"New" = x"${TMUX_SESSION}" ]]; then
     NAME=$(rofi -dmenu -p 'Name for new session')
     echo "hear"
-    alacritty -e tmux new-session -s "${NAME}" &
+    rofi-sensible-terminal -e tmux new-session -s "${NAME}" &
 elif [[ -z "${TMUX_SESSION}" ]]; then
     echo "Cancel"
 else
     echo "there"
-    alacritty -e tmux new -AD -s ${TMUX_SESSION} 
+    rofi-sensible-terminal -e tmux new -AD -s ${TMUX_SESSION} 
 fi
