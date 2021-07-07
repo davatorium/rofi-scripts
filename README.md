@@ -33,6 +33,13 @@ Based on code in Mate-HUD.
 Attach to a running `tmux` session or create a new one.
 Since this script starts a new terminal it can also been used with a keybinding from your favorite window-manager.
 
+## docker_bash.sh
+
+Start a Bash session in a Docker container. Like `tmux_session.sh` this opens a new terminal and is suitable for keybinding.
+
+### Screenshot
+![Docker-Bash](docker_bash.png)
+
 ### Usage
 
 Interactive usage
