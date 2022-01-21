@@ -97,3 +97,19 @@ SEL=$( gen_entries | rofi -dmenu -p "Monitor Setup:" -a 0 -no-custom  | awk '{pr
 
 # Call xrandr
 $( ${COMMANDS[$SEL]} )
+
+#Update background image
+
+#Check if Tools exist and are executable
+if [[ -x $(which wpg) && -x $(which nitrogen) && -x $(which xrandr) ]] ;
+then
+    #Get the last used image from wpg
+    image=$(grep 'png\|jpg\|jpeg' ~/.config/wpg/wp_init.sh  | awk '{print $3}' | sed s/\'//g)
+    background=~/.config/wpg/wallpapers/$image
+    [ -f "$background" ] || exit
+
+    #Set the image with nitrogen for the second Screen
+    nitrogen --set-scaled $background --head=0
+    [[ $(xrandr --listactivemonitors) =~ "HDMI" ]] && \
+        nitrogen --set-scaled $background --head=1
+fi
