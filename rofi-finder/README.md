@@ -15,6 +15,10 @@ To seach parent directories type ```?<search_query>```
 
 You can print this help by typing ```!!```
 
+### Dependencies
+- rofi (obviously)
+- exo (for exo-open)
+
 ### Screenshots
 
 Type your search query to find files and press enter:
